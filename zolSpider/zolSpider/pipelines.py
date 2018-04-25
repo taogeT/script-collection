@@ -7,9 +7,11 @@
 from datetime import datetime
 
 import xlsxwriter
+import codecs
+import json
 
 
-class ZolspiderPipeline(object):
+class ZolspiderExcelPipeline(object):
 
     def __init__(self):
         self.table_dict = {}
@@ -31,3 +33,19 @@ class ZolspiderPipeline(object):
         self.table_dict.setdefault('价格', []).append(item['price'])
         for key, value in item['params'].items():
             self.table_dict.setdefault(key, []).append(value)
+        return item
+
+
+class ZolspiderJsonPipeline(object):
+
+    def __init__(self):
+        self.dict_list = []
+
+    def close_spider(self, spider):
+        if len(self.dict_list) > 0:
+            with codecs.open('ZOL-' + datetime.now().strftime('%Y%m%d-%H%M%S') + '.json', 'w', encoding='utf-8') as fw:
+                json.dump(self.dict_list, fw, ensure_ascii=False)
+
+    def process_item(self, item, spider):
+        self.dict_list.append(dict(item['params'], 名称=item['name'], 价格=item['price']))
+        return item

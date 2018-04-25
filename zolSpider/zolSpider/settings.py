@@ -76,7 +76,8 @@ DOWNLOADER_CLIENTCONTEXTFACTORY = 'scrapy.core.downloader.contextfactory.Browser
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'zolSpider.pipelines.ZolspiderPipeline': 300,
+    'zolSpider.pipelines.ZolspiderExcelPipeline': 300,
+    'zolSpider.pipelines.ZolspiderJsonPipeline': 310,
     'scrapy_redis.pipelines.RedisPipeline': 400
 }
 
