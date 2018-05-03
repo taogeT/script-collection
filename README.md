@@ -3,10 +3,28 @@
 
 ### 1. 中关村爬虫
 
-遍历所有的手机名称、价格、参数信息。
+遍历手机信息。
 
 ` scrapy crawl cellphone `
 
-遍历所有的笔记本电脑名称、价格、参数信息。
+遍历笔记本电脑信息。
 
 ` scrapy crawl notebook `
+
+遍历硬件外设信息。
+
+* 显示器
+
+` scrapy crawl screen `
+
+* 鼠标
+
+` scrapy crawl mouse `
+
+* 键盘
+
+` scrapy crawl keyboard `
+
+* 耳机
+
+` scrapy crawl headset `
