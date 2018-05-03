@@ -14,25 +14,25 @@ import json
 class ZolspiderExcelPipeline(object):
 
     def __init__(self):
-        self.table_dict = {}
+        self.column_list = ['名称', '价格']
+        self.dict_list = []
 
     def close_spider(self, spider):
-        if len(self.table_dict.keys()) > 0:
-            workbook = xlsxwriter.Workbook('ZOL-{}-{}.xlsx'.format(spider.name, datetime.now().strftime('%Y%m%d-%H%M%S')))
+        if len(self.dict_list) > 0:
+            workbook = xlsxwriter.Workbook('ZOL-{}-{}.xlsx'.format(spider.name, datetime.now().strftime('%Y%m%d%H%M')))
             worksheet = workbook.add_worksheet(name='ZOL 遍历结果')
-
-            for keyIndex, (key, valueArray) in enumerate(self.table_dict.items()):
-                worksheet.write(0, keyIndex, key)
-                for valueIndex, value in enumerate(valueArray):
-                    worksheet.write(valueIndex + 1, keyIndex, value)
-
+            # write column name
+            for columnIndex, column in enumerate(self.column_list):
+                worksheet.write(0, columnIndex, column)
+            # write row
+            for rowIndex, row in enumerate(self.dict_list):
+                for rowKey, rowValue in row.items():
+                    worksheet.write(rowIndex + 1, self.column_list.index(rowKey), rowValue)
             workbook.close()
 
     def process_item(self, item, spider):
-        self.table_dict.setdefault('名称', []).append(item['name'])
-        self.table_dict.setdefault('价格', []).append(item['price'])
-        for key, value in item['params'].items():
-            self.table_dict.setdefault(key, []).append(value)
+        self.dict_list.append(dict(item['params'], 名称=item['name'], 价格=item['price']))
+        self.column_list += [key for key in item['params'].keys() if key not in self.column_list]
         return item
 
 
@@ -43,7 +43,7 @@ class ZolspiderJsonPipeline(object):
 
     def close_spider(self, spider):
         if len(self.dict_list) > 0:
-            with codecs.open('ZOL-{}-{}.json'.format(spider.name, datetime.now().strftime('%Y%m%d%H%M%S')), 'w', encoding='utf-8') as fw:
+            with codecs.open('ZOL-{}-{}.json'.format(spider.name, datetime.now().strftime('%Y%m%d%H%M')), 'w', encoding='utf-8') as fw:
                 json.dump(self.dict_list, fw, ensure_ascii=False)
 
     def process_item(self, item, spider):
