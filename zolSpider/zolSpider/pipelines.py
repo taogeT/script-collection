@@ -18,7 +18,7 @@ class ZolspiderExcelPipeline(object):
 
     def close_spider(self, spider):
         if len(self.table_dict.keys()) > 0:
-            workbook = xlsxwriter.Workbook('ZOL-' + datetime.now().strftime('%Y%m%d-%H%M%S') + '.xlsx')
+            workbook = xlsxwriter.Workbook('ZOL-{}-{}.xlsx'.format(spider.name, datetime.now().strftime('%Y%m%d-%H%M%S')))
             worksheet = workbook.add_worksheet(name='ZOL 遍历结果')
 
             for keyIndex, (key, valueArray) in enumerate(self.table_dict.items()):
@@ -43,7 +43,7 @@ class ZolspiderJsonPipeline(object):
 
     def close_spider(self, spider):
         if len(self.dict_list) > 0:
-            with codecs.open('ZOL-' + datetime.now().strftime('%Y%m%d-%H%M%S') + '.json', 'w', encoding='utf-8') as fw:
+            with codecs.open('ZOL-{}-{}.json'.format(spider.name, datetime.now().strftime('%Y%m%d%H%M%S')), 'w', encoding='utf-8') as fw:
                 json.dump(self.dict_list, fw, ensure_ascii=False)
 
     def process_item(self, item, spider):
