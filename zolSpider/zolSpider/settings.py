@@ -77,8 +77,7 @@ DOWNLOADER_CLIENTCONTEXTFACTORY = 'scrapy.core.downloader.contextfactory.Browser
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'zolSpider.pipelines.ZolspiderExcelPipeline': 300,
-    'zolSpider.pipelines.ZolspiderJsonPipeline': 310,
-    'scrapy_redis.pipelines.RedisPipeline': 400
+    'zolSpider.pipelines.ZolspiderJsonPipeline': 310
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -90,7 +89,7 @@ AUTOTHROTTLE_ENABLED = True
 #AUTOTHROTTLE_MAX_DELAY = 60
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
-AUTOTHROTTLE_TARGET_CONCURRENCY = 2.0
+AUTOTHROTTLE_TARGET_CONCURRENCY = 1.5
 # Enable showing throttling stats for every response received:
 #AUTOTHROTTLE_DEBUG = False
 
@@ -129,10 +128,10 @@ DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 #SCHEDULER_PERSIST = True
 
 # Schedule requests using a priority queue. (default)
-#SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.PriorityQueue'
+SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.PriorityQueue'
 
 # Alternative queues.
-SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.FifoQueue'
+#SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.FifoQueue'
 #SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.LifoQueue'
 
 # Max idle time to prevent the spider from being closed when distributed crawling.
