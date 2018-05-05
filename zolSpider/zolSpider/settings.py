@@ -15,6 +15,7 @@ SPIDER_MODULES = ['zolSpider.spiders']
 NEWSPIDER_MODULE = 'zolSpider.spiders'
 
 LOG_LEVEL = 'INFO'
+DOWNLOAD_MAXSIZE = 0
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36'

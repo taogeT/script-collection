@@ -46,5 +46,4 @@ class BaseZolSpider(Spider):
             else:
                 item_params[param_name] = param_content.xpath('text()').extract_first()
         if len(item_params.keys()) > 0:
-            item = ProductItem(name=response.meta['名称'], price=response.meta['价格'], params=item_params)
-            yield item
+            yield ProductItem(name=response.meta['名称'], price=response.meta['价格'], params=item_params)
