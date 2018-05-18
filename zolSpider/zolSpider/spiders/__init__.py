@@ -27,23 +27,27 @@ class BaseZolSpider(Spider):
 
     def parse_param(self, response):
         item_params = {}
-        for li_element in response.xpath('//ul[@class="category-param-list"]/li'):
-            param_name, param_content = li_element.xpath('span')
-            param_name = param_name.xpath('text()').extract_first()
-            has_element = param_content.xpath('a').extract_first()
-            if has_element:
-                a_text = param_content.xpath('a/text()').extract()
-                span_text = param_content.xpath('text()').extract()
-                # delete \r\n and split with ，
-                span_text = list(map(lambda a: a.replace('\r\n', '').split('，'), span_text))
-                # reduce join
-                if len(span_text) > 1:
-                    span_text = list(filter(lambda x: x, reduce(lambda x, y: x + y, span_text)))
-                elif len(span_text) == 1:
-                    span_text = span_text[0]
+        item_columns = []
+        for table_element in response.xpath('//div[@class="detailed-parameters"]/table'):
+            for tr_element in table_element.xpath('tr[position()>1]'):
+                param_name = tr_element.xpath('th/span/text()').extract_first()
+                param_content = tr_element.xpath('td/span')
+                has_element = param_content.xpath('a').extract_first()
+                if has_element:
+                    a_text = param_content.xpath('a/text()').extract()
+                    span_text = param_content.xpath('text()').extract()
+                    # delete \r\n and split with ，
+                    span_text = list(map(lambda a: a.replace('\r\n', '').split('，'), span_text))
+                    # reduce join
+                    if len(span_text) > 1:
+                        span_text = list(filter(lambda x: x, reduce(lambda x, y: x + y, span_text)))
+                    elif len(span_text) == 1:
+                        span_text = span_text[0]
 
-                item_params[param_name] = '，'.join(a_text + span_text)
-            else:
-                item_params[param_name] = param_content.xpath('text()').extract_first()
+                    item_params[param_name] = '，'.join(a_text + span_text)
+                else:
+                    item_params[param_name] = param_content.xpath('text()').extract_first()
+                item_columns.append(param_name)
         if len(item_params.keys()) > 0:
-            yield ProductItem(name=response.meta['名称'], price=response.meta['价格'], params=item_params)
+            yield ProductItem(name=response.meta['名称'], price=response.meta['价格'],
+                              params=item_params, columns=item_columns)

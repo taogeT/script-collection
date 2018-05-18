@@ -32,7 +32,7 @@ class ZolspiderExcelPipeline(object):
 
     def process_item(self, item, spider):
         self.dict_list.append(dict(item['params'], 名称=item['name'], 价格=item['price']))
-        self.column_list += [key for key in item['params'].keys() if key not in self.column_list]
+        self.column_list += [key for key in item['columns'] if key not in self.column_list]
         return item
 
 

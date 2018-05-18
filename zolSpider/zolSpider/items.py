@@ -13,3 +13,4 @@ class ProductItem(Item):
     name = Field(serializer=str)
     price = Field(serializer=float)
     params = Field(serializer=dict)
+    columns = Field(serializer=list)
