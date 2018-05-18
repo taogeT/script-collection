@@ -28,3 +28,9 @@
 * 耳机
 
 ` scrapy crawl headset `
+
+### 2. GSMArena.com爬虫
+
+遍历手机信息。
+
+` scrapy crawl cellphone `
