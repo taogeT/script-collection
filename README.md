@@ -34,3 +34,7 @@
 遍历手机信息。
 
 ` scrapy crawl cellphone `
+
+### 3. 算法实现
+
+* 子集与子集和问题 (Subset Sum Problem)
