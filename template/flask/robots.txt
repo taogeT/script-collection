@@ -1,0 +1,3 @@
+# robots.txt for Xencio API
+User-agent: *
+Disallow: /

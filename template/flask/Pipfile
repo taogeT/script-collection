@@ -1,0 +1,18 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+watchdog = "*"
+autopep8 = "*"
+flake8 = "*"
+faker = "*"
+
+[packages]
+flask = ">=1.0"
+python-dotenv = "*"
+simplejson = "*"
+
+[requires]
+python_version = "3.7"
